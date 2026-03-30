@@ -45,8 +45,8 @@ export default function SummaryCards({ results }: Props) {
           <HelpTip
             text={
               isZh
-                ? "经济成本 ≠ 现金支出！TCO 包含利息、持有、机会成本和交易费摊销，减去增值。不含本金偿还（转化为净值）。下方「年度现金支出」展示实际掏钱金额"
-                : "Economic cost ≠ cash outflow! TCO = interest + holding + opportunity cost + txn − appreciation. Excludes principal (builds equity). See 'Annual Cash Outflow' below for actual spending"
+                ? "经济成本 ≠ 现金支出！TCO = 利息 + 持有 + 首付放弃收益 + 交易费摊销 − 增值。不含本金偿还（转化为净值）。下方「年度现金支出」展示实际掏钱金额"
+                : "Economic cost ≠ cash outflow! TCO = interest + holding + foregone returns + txn − appreciation. Excludes principal (builds equity). See 'Annual Cash Outflow' below for actual spending"
             }
           />
         </p>
@@ -63,7 +63,12 @@ export default function SummaryCards({ results }: Props) {
             <span>{formatCompactHKD(singleYear.holdingExpenses + singleYear.buyingCostAmortized + singleYear.sellingCostAmortized)}</span>
           </div>
           <div className="flex justify-between">
-            <span>{isZh ? "机会成本" : "Opp. cost"}</span>
+            <span>{isZh ? "首付放弃收益" : "Foregone returns"}
+              <HelpTip text={isZh
+                ? "如果不买房，首付这笔钱拿去投资每年能赚多少。买了房这笔收益就放弃了，所以算作成本"
+                : "Returns you could have earned by investing your down payment instead of buying. This forgone income counts as a cost of owning"
+              } />
+            </span>
             <span>{formatCompactHKD(singleYear.opportunityCost)}</span>
           </div>
           <div
