@@ -116,7 +116,7 @@ export default function CostBreakdown({ results }: Props) {
               </span>
             </div>
             {entry.payload.totalOnce != null && (
-              <div className="ml-4 text-[11px] text-zinc-400">
+              <div className="ml-4 text-xs text-zinc-400">
                 {totalLabel}: {formatCompactHKD(entry.payload.totalOnce)} ÷ {params.projectionYears}
               </div>
             )}
@@ -146,12 +146,12 @@ export default function CostBreakdown({ results }: Props) {
             <BarChart data={comparisonData} barSize={48}>
               <XAxis
                 dataKey="name"
-                tick={{ fill: "#71717a", fontSize: 11 }}
+                tick={{ fill: "#71717a", fontSize: 12 }}
                 axisLine={false}
                 tickLine={false}
               />
               <YAxis
-                tick={{ fill: "#a1a1aa", fontSize: 10 }}
+                tick={{ fill: "#a1a1aa", fontSize: 12 }}
                 axisLine={false}
                 tickLine={false}
                 tickFormatter={(v) => formatCompactHKD(v)}
@@ -174,7 +174,7 @@ export default function CostBreakdown({ results }: Props) {
             <BarChart data={breakdownData} barSize={40} layout="vertical">
               <XAxis
                 type="number"
-                tick={{ fill: "#a1a1aa", fontSize: 10 }}
+                tick={{ fill: "#a1a1aa", fontSize: 12 }}
                 axisLine={false}
                 tickLine={false}
                 tickFormatter={(v) => formatCompactHKD(v)}
@@ -182,7 +182,7 @@ export default function CostBreakdown({ results }: Props) {
               <YAxis
                 type="category"
                 dataKey="name"
-                tick={{ fill: "#71717a", fontSize: 10 }}
+                tick={{ fill: "#71717a", fontSize: 12 }}
                 axisLine={false}
                 tickLine={false}
                 width={130}
@@ -221,7 +221,7 @@ export default function CostBreakdown({ results }: Props) {
               <Legend
                 iconType="circle"
                 iconSize={8}
-                wrapperStyle={{ fontSize: "11px", color: "#71717a" }}
+                wrapperStyle={{ fontSize: "12px", color: "#71717a" }}
               />
             </PieChart>
           </ResponsiveContainer>

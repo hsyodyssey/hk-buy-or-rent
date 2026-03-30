@@ -4,7 +4,7 @@ const translations = {
   en: {
     // Header
     "header.title": "HK Property Cost Analyzer",
-    "header.subtitle": "True Cost of Owning vs Renting — Hong Kong",
+    "header.subtitle": "True Cost of Owning vs Renting — Data-Driven Decisions",
 
     // Mode
     "mode.ownerOccupied": "Owner-Occupied",
@@ -202,7 +202,7 @@ const translations = {
   },
   zh: {
     "header.title": "香港房产成本分析器",
-    "header.subtitle": "自住买房 vs 租房 真实成本对比 — 香港",
+    "header.subtitle": "自住买房 vs 租房 真实成本对比 — 用数据做决策",
 
     "mode.ownerOccupied": "自住对比",
     "mode.buyToLet": "以租养房",
@@ -387,7 +387,7 @@ const translations = {
   },
   tc: {
     "header.title": "香港房產成本分析器",
-    "header.subtitle": "自住買房 vs 租房 真實成本對比 — 香港",
+    "header.subtitle": "自住買房 vs 租房 真實成本對比 — 用數據做決策",
 
     "mode.ownerOccupied": "自住對比",
     "mode.buyToLet": "以租養房",

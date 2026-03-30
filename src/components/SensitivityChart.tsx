@@ -187,12 +187,12 @@ export default function SensitivityChart({ results }: Props) {
           <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1">
             {t("sensitivity.heatmapTitle")}
           </h3>
-          <p className="text-[11px] text-zinc-400 mb-4">
+          <p className="text-xs text-zinc-400 mb-4">
             {t("sensitivity.heatmapDesc")}
           </p>
 
           <div className="overflow-x-auto">
-            <table className="text-[11px] font-mono">
+            <table className="text-xs font-mono">
               <thead>
                 <tr>
                   <th className="p-1 text-zinc-400 text-right pr-2">rᵢ \ g</th>
@@ -239,12 +239,12 @@ export default function SensitivityChart({ results }: Props) {
           <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1">
             {t("sensitivity.tornadoTitle")}
           </h3>
-          <p className="text-[11px] text-zinc-400 mb-3">
+          <p className="text-xs text-zinc-400 mb-3">
             {t("sensitivity.tornadoDesc")}
           </p>
 
           {/* Legend */}
-          <div className="flex items-center gap-4 text-[11px] text-zinc-500 mb-4">
+          <div className="flex items-center gap-4 text-xs text-zinc-500 mb-4">
             <span className="flex items-center gap-1">
               <span className="inline-block w-3 h-3 rounded-sm bg-red-400" />
               {t("sensitivity.buyingSaves")}
@@ -290,11 +290,11 @@ export default function SensitivityChart({ results }: Props) {
                       <span className="text-xs font-semibold text-zinc-700">
                         {row.name}
                       </span>
-                      <span className="text-[11px] text-zinc-400">
+                      <span className="text-xs text-zinc-400">
                         {leftLabel} → {rightLabel}
                       </span>
                     </div>
-                    <span className="text-[11px] font-mono font-semibold text-zinc-500">
+                    <span className="text-xs font-mono font-semibold text-zinc-500">
                       {t("sensitivity.swing")} {formatCompactHKD(row.swing)}
                     </span>
                   </div>
@@ -331,7 +331,7 @@ export default function SensitivityChart({ results }: Props) {
 
                     {/* Left-end label (min diff) */}
                     <span
-                      className="absolute top-1/2 -translate-y-1/2 text-[11px] font-mono font-semibold z-20 pointer-events-none"
+                      className="absolute top-1/2 -translate-y-1/2 text-xs font-mono font-semibold z-20 pointer-events-none"
                       style={{
                         left: `${startPos}%`,
                         transform: "translate(-100%, -50%)",
@@ -344,7 +344,7 @@ export default function SensitivityChart({ results }: Props) {
 
                     {/* Right-end label (max diff) */}
                     <span
-                      className="absolute top-1/2 -translate-y-1/2 text-[11px] font-mono font-semibold z-20 pointer-events-none"
+                      className="absolute top-1/2 -translate-y-1/2 text-xs font-mono font-semibold z-20 pointer-events-none"
                       style={{
                         left: `${endPos}%`,
                         transform: "translate(0%, -50%)",
@@ -361,7 +361,7 @@ export default function SensitivityChart({ results }: Props) {
           </div>
 
           {/* Axis labels */}
-          <div className="flex justify-between text-[11px] text-zinc-400 mt-3 font-medium">
+          <div className="flex justify-between text-xs text-zinc-400 mt-3 font-medium">
             <span>← {t("sensitivity.buyingSaves")}</span>
             <span>{t("sensitivity.rentingCosts")} →</span>
           </div>

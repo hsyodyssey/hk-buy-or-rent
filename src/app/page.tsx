@@ -79,7 +79,7 @@ function AppContent() {
               }`}>
                 {t(opt.labelKey)}
               </span>
-              <p className={`text-[11px] mt-0.5 ${
+              <p className={`text-xs mt-0.5 ${
                 mode === opt.key ? "text-teal-500" : "text-zinc-400"
               }`}>
                 {t(opt.descKey)}

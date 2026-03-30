@@ -109,10 +109,10 @@ export default function BTLTimeSeriesChart({ results }: Props) {
           {view === "cashFlow" ? (
             <LineChart data={cashFlowData}>
               <CartesianGrid strokeDasharray="3 3" stroke="#f4f4f5" />
-              <XAxis dataKey="year" tick={{ fill: "#a1a1aa", fontSize: 11 }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fill: "#a1a1aa", fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => formatCompactHKD(v)} />
+              <XAxis dataKey="year" tick={{ fill: "#a1a1aa", fontSize: 12 }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fill: "#a1a1aa", fontSize: 12 }} axisLine={false} tickLine={false} tickFormatter={(v) => formatCompactHKD(v)} />
               <Tooltip content={<CustomTooltip />} />
-              <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: "11px", color: "#71717a" }} />
+              <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: "12px", color: "#71717a" }} />
               <ReferenceLine y={0} stroke="#a1a1aa" strokeDasharray="3 3" />
               <Line
                 name={isZh ? "有效租金收入（扣空置）" : "Effective Rental Income (−vacancy)"}
@@ -140,10 +140,10 @@ export default function BTLTimeSeriesChart({ results }: Props) {
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#f4f4f5" />
-              <XAxis dataKey="year" tick={{ fill: "#a1a1aa", fontSize: 11 }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fill: "#a1a1aa", fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => formatCompactHKD(v)} />
+              <XAxis dataKey="year" tick={{ fill: "#a1a1aa", fontSize: 12 }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fill: "#a1a1aa", fontSize: 12 }} axisLine={false} tickLine={false} tickFormatter={(v) => formatCompactHKD(v)} />
               <Tooltip content={<CustomTooltip />} />
-              <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: "11px", color: "#71717a" }} />
+              <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: "12px", color: "#71717a" }} />
               {(() => {
                 const last = btlProjection[btlProjection.length - 1];
                 const investorLarger = last ? last.investorWealth >= last.alternativeWealth : true;
@@ -169,10 +169,10 @@ export default function BTLTimeSeriesChart({ results }: Props) {
           ) : (
             <LineChart data={btlProjection}>
               <CartesianGrid strokeDasharray="3 3" stroke="#f4f4f5" />
-              <XAxis dataKey="year" tick={{ fill: "#a1a1aa", fontSize: 11 }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fill: "#a1a1aa", fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => formatPercent(v, 1)} />
+              <XAxis dataKey="year" tick={{ fill: "#a1a1aa", fontSize: 12 }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fill: "#a1a1aa", fontSize: 12 }} axisLine={false} tickLine={false} tickFormatter={(v) => formatPercent(v, 1)} />
               <Tooltip content={<CustomTooltip />} />
-              <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: "11px", color: "#71717a" }} />
+              <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: "12px", color: "#71717a" }} />
               <Line
                 name={isZh ? "毛回报率（年租 ÷ 房价）" : "Gross Yield (rent ÷ value)"}
                 type="monotone" dataKey="grossYield" stroke="#d97706" strokeWidth={2.5} dot={false}

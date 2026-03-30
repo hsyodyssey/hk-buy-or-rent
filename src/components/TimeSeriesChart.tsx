@@ -99,12 +99,12 @@ export default function TimeSeriesChart({ results }: Props) {
               <CartesianGrid strokeDasharray="3 3" stroke="#f4f4f5" />
               <XAxis
                 dataKey="year"
-                tick={{ fill: "#a1a1aa", fontSize: 11 }}
+                tick={{ fill: "#a1a1aa", fontSize: 12 }}
                 axisLine={false}
                 tickLine={false}
               />
               <YAxis
-                tick={{ fill: "#a1a1aa", fontSize: 10 }}
+                tick={{ fill: "#a1a1aa", fontSize: 12 }}
                 axisLine={false}
                 tickLine={false}
                 tickFormatter={(v) => formatCompactHKD(v)}
@@ -113,7 +113,7 @@ export default function TimeSeriesChart({ results }: Props) {
               <Legend
                 iconType="circle"
                 iconSize={8}
-                wrapperStyle={{ fontSize: "11px", color: "#71717a" }}
+                wrapperStyle={{ fontSize: "12px", color: "#71717a" }}
               />
               <Line
                 name={t("timeseries.ownTco")}
@@ -149,12 +149,12 @@ export default function TimeSeriesChart({ results }: Props) {
               <CartesianGrid strokeDasharray="3 3" stroke="#f4f4f5" />
               <XAxis
                 dataKey="year"
-                tick={{ fill: "#a1a1aa", fontSize: 11 }}
+                tick={{ fill: "#a1a1aa", fontSize: 12 }}
                 axisLine={false}
                 tickLine={false}
               />
               <YAxis
-                tick={{ fill: "#a1a1aa", fontSize: 10 }}
+                tick={{ fill: "#a1a1aa", fontSize: 12 }}
                 axisLine={false}
                 tickLine={false}
                 tickFormatter={(v) => formatCompactHKD(v)}
@@ -163,7 +163,7 @@ export default function TimeSeriesChart({ results }: Props) {
               <Legend
                 iconType="circle"
                 iconSize={8}
-                wrapperStyle={{ fontSize: "11px", color: "#71717a" }}
+                wrapperStyle={{ fontSize: "12px", color: "#71717a" }}
               />
               <Area
                 name={t("timeseries.ownCumulative")}
@@ -197,12 +197,12 @@ export default function TimeSeriesChart({ results }: Props) {
               <CartesianGrid strokeDasharray="3 3" stroke="#f4f4f5" />
               <XAxis
                 dataKey="year"
-                tick={{ fill: "#a1a1aa", fontSize: 11 }}
+                tick={{ fill: "#a1a1aa", fontSize: 12 }}
                 axisLine={false}
                 tickLine={false}
               />
               <YAxis
-                tick={{ fill: "#a1a1aa", fontSize: 10 }}
+                tick={{ fill: "#a1a1aa", fontSize: 12 }}
                 axisLine={false}
                 tickLine={false}
                 tickFormatter={(v) => formatCompactHKD(v)}
@@ -211,7 +211,7 @@ export default function TimeSeriesChart({ results }: Props) {
               <Legend
                 iconType="circle"
                 iconSize={8}
-                wrapperStyle={{ fontSize: "11px", color: "#71717a" }}
+                wrapperStyle={{ fontSize: "12px", color: "#71717a" }}
               />
               {ownerLarger ? (
                 <>

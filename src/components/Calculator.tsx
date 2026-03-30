@@ -432,7 +432,7 @@ export default function Calculator({
           { label: t("calc.totalUpfront"), value: upfront.total },
         ].map((item) => (
           <div key={item.label} className="text-center">
-            <p className="text-[11px] text-zinc-400 uppercase tracking-wider">
+            <p className="text-xs text-zinc-400 uppercase tracking-wider">
               {item.label}
             </p>
             <p className="text-base font-mono font-semibold text-zinc-700">

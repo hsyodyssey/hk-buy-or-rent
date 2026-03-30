@@ -153,13 +153,13 @@ export default function BTLBreakdown({ results }: Props) {
           <h3 className="text-sm font-semibold uppercase tracking-wider text-zinc-400 mb-1">
             {isZh ? "年租金 vs 年支出" : "Annual Rent vs Outgoing"}
           </h3>
-          <p className="text-[11px] text-zinc-400/70 mb-4">
+          <p className="text-xs text-zinc-400/70 mb-4">
             {isZh ? "支出含按揭（本金+利息）+ 持有 + 交易摊销" : "Outgoing = mortgage (P+I) + holding + txn amortized"}
           </p>
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={comparisonData} barSize={48}>
-              <XAxis dataKey="name" tick={{ fill: "#71717a", fontSize: 11 }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fill: "#a1a1aa", fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => formatCompactHKD(v)} />
+              <XAxis dataKey="name" tick={{ fill: "#71717a", fontSize: 12 }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fill: "#a1a1aa", fontSize: 12 }} axisLine={false} tickLine={false} tickFormatter={(v) => formatCompactHKD(v)} />
               <Tooltip content={<CustomTooltip />} cursor={false} />
               <Bar dataKey="value" radius={[6, 6, 0, 0]}>
                 {comparisonData.map((entry, i) => (
@@ -175,13 +175,13 @@ export default function BTLBreakdown({ results }: Props) {
           <h3 className="text-sm font-semibold uppercase tracking-wider text-zinc-400 mb-1">
             {isZh ? "支出构成明细" : "Outgoing Components"}
           </h3>
-          <p className="text-[11px] text-zinc-400/70 mb-4">
+          <p className="text-xs text-zinc-400/70 mb-4">
             {isZh ? "注意：本金偿还转化为房产净值，并非真正的「成本」" : "Note: principal repayment builds equity, not a true \"cost\""}
           </p>
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={costData} barSize={32} layout="vertical">
-              <XAxis type="number" tick={{ fill: "#a1a1aa", fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => formatCompactHKD(v)} />
-              <YAxis type="category" dataKey="name" tick={{ fill: "#71717a", fontSize: 11 }} axisLine={false} tickLine={false} width={140} />
+              <XAxis type="number" tick={{ fill: "#a1a1aa", fontSize: 12 }} axisLine={false} tickLine={false} tickFormatter={(v) => formatCompactHKD(v)} />
+              <YAxis type="category" dataKey="name" tick={{ fill: "#71717a", fontSize: 12 }} axisLine={false} tickLine={false} width={140} />
               <Tooltip content={<CustomTooltip />} cursor={false} />
               <Bar dataKey="value" radius={[0, 6, 6, 0]}>
                 {costData.map((entry, i) => (
@@ -197,7 +197,7 @@ export default function BTLBreakdown({ results }: Props) {
           <h3 className="text-sm font-semibold uppercase tracking-wider text-zinc-400 mb-1">
             {isZh ? "支出占比" : "Outgoing Share"}
           </h3>
-          <p className="text-[11px] text-zinc-400/70 mb-4">
+          <p className="text-xs text-zinc-400/70 mb-4">
             {isZh ? "每年总现金支出中各项占比" : "Proportion of each component in total annual outgoing"}
           </p>
           <ResponsiveContainer width="100%" height={220}>
@@ -208,7 +208,7 @@ export default function BTLBreakdown({ results }: Props) {
                 ))}
               </Pie>
               <Tooltip content={<CustomTooltip />} />
-              <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: "11px", color: "#71717a" }} />
+              <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: "12px", color: "#71717a" }} />
             </PieChart>
           </ResponsiveContainer>
         </div>

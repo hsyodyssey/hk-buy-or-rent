@@ -26,7 +26,7 @@ export default function HelpTip({ text, className = "" }: Props) {
       onMouseEnter={() => setShow(true)}
       onMouseLeave={() => setShow(false)}
     >
-      <span className="inline-flex items-center justify-center w-4 h-4 rounded-full border border-zinc-300 text-zinc-400 text-[10px] font-medium cursor-help hover:border-zinc-500 hover:text-zinc-600 transition-colors ml-1">
+      <span className="inline-flex items-center justify-center w-4 h-4 rounded-full border border-zinc-300 text-zinc-400 text-[11px] font-medium cursor-help hover:border-zinc-500 hover:text-zinc-600 transition-colors ml-1">
         ?
       </span>
       {show && (

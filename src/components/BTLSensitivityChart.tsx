@@ -145,13 +145,13 @@ export default function BTLSensitivityChart({ results }: Props) {
           <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1">
             {isZh ? "净回报热力图：月租金 × 增值率" : "Net Return Heatmap: Rent × Appreciation"}
           </h3>
-          <p className="text-[11px] text-zinc-400 mb-4">
+          <p className="text-xs text-zinc-400 mb-4">
             {isZh
               ? "红色 = 正回报（物业赚钱）| 绿色 = 负回报（物业亏钱）"
               : "Red = positive return (property gains) | Green = negative return (property loses)"}
           </p>
           <div className="overflow-x-auto">
-            <table className="text-[11px] font-mono">
+            <table className="text-xs font-mono">
               <thead>
                 <tr>
                   <th className="p-1 text-zinc-400 text-right pr-2">rent \ g</th>
@@ -195,13 +195,13 @@ export default function BTLSensitivityChart({ results }: Props) {
           <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1">
             {t("sensitivity.tornadoTitle")}
           </h3>
-          <p className="text-[11px] text-zinc-400 mb-3">
+          <p className="text-xs text-zinc-400 mb-3">
             {isZh
               ? "单独调整每个变量时，年化净回报（现金流+增值）的变化范围"
               : "Range of annual net return (cash flow + appreciation) when varying each parameter alone"}
           </p>
 
-          <div className="flex items-center gap-4 text-[11px] text-zinc-500 mb-4">
+          <div className="flex items-center gap-4 text-xs text-zinc-500 mb-4">
             <span className="flex items-center gap-1">
               <span className="inline-block w-3 h-3 rounded-sm bg-red-400" />
               {t("btl.sensitivity.positive")}
@@ -239,9 +239,9 @@ export default function BTLSensitivityChart({ results }: Props) {
                   <div className="flex items-baseline justify-between mb-1">
                     <div className="flex items-baseline gap-2">
                       <span className="text-xs font-semibold text-zinc-700">{row.name}</span>
-                      <span className="text-[11px] text-zinc-400">{leftLabel} → {rightLabel}</span>
+                      <span className="text-xs text-zinc-400">{leftLabel} → {rightLabel}</span>
                     </div>
-                    <span className="text-[11px] font-mono font-semibold text-zinc-500">
+                    <span className="text-xs font-mono font-semibold text-zinc-500">
                       {t("sensitivity.swing")} {formatCompactHKD(row.swing)}
                     </span>
                   </div>
@@ -254,13 +254,13 @@ export default function BTLSensitivityChart({ results }: Props) {
                       <div className="absolute top-1 bottom-1 bg-green-500/80 rounded-sm" style={{ left: `${roseStart}%`, width: `${roseEnd - roseStart}%` }} />
                     )}
                     <span
-                      className="absolute top-1/2 -translate-y-1/2 text-[11px] font-mono font-semibold z-20 pointer-events-none"
+                      className="absolute top-1/2 -translate-y-1/2 text-xs font-mono font-semibold z-20 pointer-events-none"
                       style={{ left: `${startPos}%`, transform: "translate(-100%, -50%)", paddingRight: "4px", color: minVal >= 0 ? "#dc2626" : "#16a34a" }}
                     >
                       {formatCompactHKD(minVal)}
                     </span>
                     <span
-                      className="absolute top-1/2 -translate-y-1/2 text-[11px] font-mono font-semibold z-20 pointer-events-none"
+                      className="absolute top-1/2 -translate-y-1/2 text-xs font-mono font-semibold z-20 pointer-events-none"
                       style={{ left: `${endPos}%`, transform: "translate(0%, -50%)", paddingLeft: "4px", color: maxVal >= 0 ? "#dc2626" : "#16a34a" }}
                     >
                       {formatCompactHKD(maxVal)}
@@ -271,7 +271,7 @@ export default function BTLSensitivityChart({ results }: Props) {
             })}
           </div>
 
-          <div className="flex justify-between text-[11px] text-zinc-400 mt-3 font-medium">
+          <div className="flex justify-between text-xs text-zinc-400 mt-3 font-medium">
             <span>← {t("btl.sensitivity.negative")}</span>
             <span>{t("btl.sensitivity.positive")} →</span>
           </div>
