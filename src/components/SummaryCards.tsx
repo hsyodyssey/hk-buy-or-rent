@@ -162,35 +162,81 @@ export default function SummaryCards({ results }: Props) {
         </div>
       </div>
 
-      {/* Card 3: Diff — CN: red = good (buying cheaper), green = bad */}
-      <div
-        className={`rounded-xl border p-5 bg-[#faf8f5] shadow-sm ${
-          buyIsBetter ? "border-red-200/60" : "border-green-200/60"
-        }`}
-      >
-        <p className="text-xs font-medium uppercase tracking-wider text-zinc-500 mb-2">
-          <span>{isZh ? "年度差额（租房 − 买房）" : "Annual Diff (Rent − Buy)"}</span>
-          <HelpTip
-            text={
-              isZh
-                ? "正数 = 租房成本更高 = 买房划算；负数 = 买房成本更高 = 租房划算"
-                : "Positive = renting costs more = buying wins; Negative = owning costs more = renting wins"
-            }
-          />
-        </p>
-        <p className={`text-2xl font-bold ${buyIsBetter ? "text-red-600" : "text-green-700"}`}>
-          {rentMinusBuy > 0 ? "+" : ""}
-          {formatCompactHKD(rentMinusBuy)}
-        </p>
-        <p className={`mt-2 text-xs ${buyIsBetter ? "text-red-600/90" : "text-green-700/90"}`}>
-          {buyIsBetter
-            ? (isZh ? "正数 → 租房成本更高 → 买房更划算" : "Positive → renting costs more → buying wins")
-            : (isZh ? "负数 → 买房成本更高 → 租房更划算" : "Negative → owning costs more → renting wins")}
-        </p>
-        <p className="text-xs font-mono text-zinc-400/70 mt-1">
-          {formatCompactHKD(averageAnnualTcr)} − {formatCompactHKD(averageAnnualTco)}
-        </p>
-      </div>
+      {/* Card 3: Diff — cash gap + asset gap */}
+      {(() => {
+        const effectiveLoanYears = Math.min(params.loanTermYears, N);
+        const avgAnnualMortgage = monthlyPayment * 12 * effectiveLoanYears / N;
+        const avgAnnualPrincipal = avgAnnualMortgage - singleYear.interestCost;
+        const buyerCashOut = avgAnnualMortgage + singleYear.holdingExpenses;
+        const renterCashOut = averageAnnualTcr;
+        const cashGap = buyerCashOut - renterCashOut;
+        const netGap = cashGap - avgAnnualPrincipal;
+        return (
+          <div
+            className={`rounded-xl border p-5 bg-[#faf8f5] shadow-sm ${
+              buyIsBetter ? "border-red-200/60" : "border-green-200/60"
+            }`}
+          >
+            <p className="text-xs font-medium uppercase tracking-wider text-zinc-500 mb-2">
+              <span>{isZh ? "买房 vs 租房 年度对比" : "Buy vs Rent Annual Comparison"}</span>
+              <HelpTip
+                text={isZh
+                  ? "从现金支出和资产积累两个维度对比买房与租房"
+                  : "Compares buying vs renting from both cash spending and asset building perspectives"
+                }
+              />
+            </p>
+
+            <div className="space-y-2 text-xs font-mono">
+              <div>
+                <div className="flex justify-between text-zinc-500 font-semibold">
+                  <span>{isZh ? "① 现金支出差" : "① Cash spending gap"}</span>
+                  <span className={cashGap > 0 ? "text-green-600" : "text-red-500"}>
+                    {isZh ? "买房多付 " : "Buyer pays more "}{formatCompactHKD(Math.abs(cashGap))}{isZh ? "/年" : "/yr"}
+                  </span>
+                </div>
+                <div className="flex justify-between text-zinc-400 mt-0.5">
+                  <span className="pl-2">{isZh ? "买房现金支出" : "Buyer cash out"}</span>
+                  <span>{formatCompactHKD(buyerCashOut)}</span>
+                </div>
+                <div className="flex justify-between text-zinc-400">
+                  <span className="pl-2">{isZh ? "租房现金支出" : "Renter cash out"}</span>
+                  <span>{formatCompactHKD(renterCashOut)}</span>
+                </div>
+              </div>
+
+              <div className="pt-2 border-t border-zinc-200/40">
+                <div className="flex justify-between text-zinc-500 font-semibold">
+                  <span>{isZh ? "② 资产置换（本金→净值）" : "② Equity built (principal)"}</span>
+                  <span className="text-red-500">+{formatCompactHKD(avgAnnualPrincipal)}{isZh ? "/年" : "/yr"}</span>
+                </div>
+                <p className="text-zinc-400/70 mt-0.5 pl-2">
+                  {isZh
+                    ? "买房多付的钱中，这部分变成了房产净值"
+                    : "Of the extra cash spent, this portion converts to equity"}
+                </p>
+              </div>
+
+              <div className="pt-2 border-t border-zinc-200/40">
+                <div className={`flex justify-between font-semibold ${netGap > 0 ? "text-green-600" : "text-red-500"}`}>
+                  <span>{isZh ? "③ 真实成本差 (① − ②)" : "③ True cost gap (① − ②)"}</span>
+                  <span>
+                    {netGap > 0
+                      ? (isZh ? "买房贵 " : "Buying costs more ")
+                      : (isZh ? "买房省 " : "Buying saves ")}
+                    {formatCompactHKD(Math.abs(netGap))}
+                  </span>
+                </div>
+                <p className="text-zinc-400/70 mt-0.5 pl-2">
+                  {isZh
+                    ? "不含首付放弃收益和房价增值"
+                    : "Excludes foregone returns and appreciation"}
+                </p>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
 
       {/* Card 4: Breakeven */}
       <div className={`rounded-xl border p-5 ${accentClasses.indigo}`}>
