@@ -162,7 +162,7 @@ export default function SummaryCards({ results }: Props) {
         </div>
       </div>
 
-      {/* Card 3: Diff — cash gap + asset gap */}
+      {/* Card 3: Diff — cash gap + equity + final verdict */}
       {(() => {
         const effectiveLoanYears = Math.min(params.loanTermYears, N);
         const avgAnnualMortgage = monthlyPayment * 12 * effectiveLoanYears / N;
@@ -170,7 +170,6 @@ export default function SummaryCards({ results }: Props) {
         const buyerCashOut = avgAnnualMortgage + singleYear.holdingExpenses;
         const renterCashOut = averageAnnualTcr;
         const cashGap = buyerCashOut - renterCashOut;
-        const netGap = cashGap - avgAnnualPrincipal;
         return (
           <div
             className={`rounded-xl border p-5 bg-[#faf8f5] shadow-sm ${
@@ -181,8 +180,8 @@ export default function SummaryCards({ results }: Props) {
               <span>{isZh ? "买房 vs 租房 年度对比" : "Buy vs Rent Annual Comparison"}</span>
               <HelpTip
                 text={isZh
-                  ? "从现金支出和资产积累两个维度对比买房与租房"
-                  : "Compares buying vs renting from both cash spending and asset building perspectives"
+                  ? "从现金支出、资产积累、综合经济成本三个维度对比"
+                  : "Compares from three angles: cash spending, equity building, and full economic cost"
                 }
               />
             </p>
@@ -191,7 +190,7 @@ export default function SummaryCards({ results }: Props) {
               <div>
                 <div className="flex justify-between text-zinc-500 font-semibold">
                   <span>{isZh ? "① 现金支出差" : "① Cash spending gap"}</span>
-                  <span className={cashGap > 0 ? "text-green-600" : "text-red-500"}>
+                  <span className="text-green-600">
                     {isZh ? "买房多付 " : "Buyer pays more "}{formatCompactHKD(Math.abs(cashGap))}{isZh ? "/年" : "/yr"}
                   </span>
                 </div>
@@ -212,25 +211,31 @@ export default function SummaryCards({ results }: Props) {
                 </div>
                 <p className="text-zinc-400/70 mt-0.5 pl-2">
                   {isZh
-                    ? "买房多付的钱中，这部分变成了房产净值"
-                    : "Of the extra cash spent, this portion converts to equity"}
+                    ? "月供中的本金部分，变成房产净值（非消费）"
+                    : "Principal in mortgage converts to home equity (not spent)"}
                 </p>
               </div>
 
               <div className="pt-2 border-t border-zinc-200/40">
-                <div className={`flex justify-between font-semibold ${netGap > 0 ? "text-green-600" : "text-red-500"}`}>
-                  <span>{isZh ? "③ 真实成本差 (① − ②)" : "③ True cost gap (① − ②)"}</span>
+                <div className={`flex justify-between font-semibold ${buyIsBetter ? "text-red-600" : "text-green-600"}`}>
                   <span>
-                    {netGap > 0
-                      ? (isZh ? "买房贵 " : "Buying costs more ")
-                      : (isZh ? "买房省 " : "Buying saves ")}
-                    {formatCompactHKD(Math.abs(netGap))}
+                    {isZh ? "③ 综合经济结论" : "③ Economic verdict"}
+                    <HelpTip text={isZh
+                      ? "TCR − TCO：在①②基础上，还考虑了首付放弃收益、交易费摊销和房价增值后的最终结论"
+                      : "TCR − TCO: builds on ①② plus foregone returns on down payment, transaction costs, and appreciation"
+                    } />
+                  </span>
+                  <span>
+                    {buyIsBetter
+                      ? (isZh ? "买房划算 " : "Buying wins ")
+                      : (isZh ? "租房划算 " : "Renting wins ")}
+                    {formatCompactHKD(Math.abs(rentMinusBuy))}{isZh ? "/年" : "/yr"}
                   </span>
                 </div>
                 <p className="text-zinc-400/70 mt-0.5 pl-2">
                   {isZh
-                    ? "不含首付放弃收益和房价增值"
-                    : "Excludes foregone returns and appreciation"}
+                    ? `TCR ${formatCompactHKD(averageAnnualTcr)} − TCO ${formatCompactHKD(averageAnnualTco)}`
+                    : `TCR ${formatCompactHKD(averageAnnualTcr)} − TCO ${formatCompactHKD(averageAnnualTco)}`}
                 </p>
               </div>
             </div>
