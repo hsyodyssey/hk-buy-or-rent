@@ -1,65 +1,151 @@
-import Image from "next/image";
+"use client";
+
+import { usePropertyCalc } from "@/hooks/usePropertyCalc";
+import { LanguageProvider, useLanguage } from "@/hooks/useLanguage";
+import { AnalysisMode } from "@/lib/constants";
+import SummaryCards from "@/components/SummaryCards";
+import Calculator from "@/components/Calculator";
+import CostBreakdown from "@/components/CostBreakdown";
+import TimeSeriesChart from "@/components/TimeSeriesChart";
+import SensitivityChart from "@/components/SensitivityChart";
+import FormulaReference from "@/components/FormulaReference";
+import BTLSummaryCards from "@/components/BTLSummaryCards";
+import BTLBreakdown from "@/components/BTLBreakdown";
+import BTLTimeSeriesChart from "@/components/BTLTimeSeriesChart";
+import BTLSensitivityChart from "@/components/BTLSensitivityChart";
+
+function AppContent() {
+  const { params, mode, setMode, updateParam, resetParams, results } = usePropertyCalc();
+  const { locale, setLocale, t } = useLanguage();
+
+  const langOptions: { key: "zh" | "tc" | "en"; label: string }[] = [
+    { key: "zh", label: "简" },
+    { key: "tc", label: "繁" },
+    { key: "en", label: "EN" },
+  ];
+
+  const modeOptions: { key: AnalysisMode; labelKey: "mode.ownerOccupied" | "mode.buyToLet"; descKey: "mode.ownerDesc" | "mode.btlDesc" }[] = [
+    { key: "owner-occupied", labelKey: "mode.ownerOccupied", descKey: "mode.ownerDesc" },
+    { key: "buy-to-let", labelKey: "mode.buyToLet", descKey: "mode.btlDesc" },
+  ];
+
+  return (
+    <div className="min-h-screen" style={{ background: "var(--background)" }}>
+      <header className="border-b border-stone-200/60 bg-[#faf6f0]/80 backdrop-blur-sm sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-center relative">
+          <div className="text-center">
+            <h1 className="text-xl font-bold text-zinc-900 tracking-tight">
+              {t("header.title")}
+            </h1>
+            <p className="text-xs text-zinc-500 mt-0.5">
+              {t("header.subtitle")}
+            </p>
+          </div>
+          <div className="absolute right-4 sm:right-6 lg:right-8 flex items-center gap-1 text-xs">
+            {langOptions.map((opt, i) => (
+              <span key={opt.key} className="flex items-center">
+                {i > 0 && <span className="text-stone-300 mx-0.5">/</span>}
+                {locale === opt.key ? (
+                  <span className="font-bold text-stone-900">{opt.label}</span>
+                ) : (
+                  <button
+                    onClick={() => setLocale(opt.key)}
+                    className="text-stone-400 hover:text-stone-700 transition-colors cursor-pointer"
+                  >
+                    {opt.label}
+                  </button>
+                )}
+              </span>
+            ))}
+          </div>
+        </div>
+      </header>
+
+      {/* Mode Switch */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+        <div className="flex gap-3">
+          {modeOptions.map((opt) => (
+            <button
+              key={opt.key}
+              onClick={() => setMode(opt.key)}
+              className={`flex-1 sm:flex-none px-5 py-3 rounded-xl border-2 transition-all text-left ${
+                mode === opt.key
+                  ? "border-teal-500 bg-teal-50/60 shadow-sm"
+                  : "border-stone-200 bg-[#faf8f5] hover:border-stone-300"
+              }`}
+            >
+              <span className={`text-sm font-semibold ${
+                mode === opt.key ? "text-teal-700" : "text-zinc-500"
+              }`}>
+                {t(opt.labelKey)}
+              </span>
+              <p className={`text-[11px] mt-0.5 ${
+                mode === opt.key ? "text-teal-500" : "text-zinc-400"
+              }`}>
+                {t(opt.descKey)}
+              </p>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+        <section>
+          {mode === "owner-occupied" ? (
+            <SummaryCards results={results} />
+          ) : (
+            <BTLSummaryCards results={results} />
+          )}
+        </section>
+        <section>
+          <Calculator
+            params={params}
+            results={results}
+            mode={mode}
+            onUpdate={updateParam}
+            onReset={resetParams}
+          />
+        </section>
+        <section>
+          {mode === "owner-occupied" ? (
+            <CostBreakdown results={results} />
+          ) : (
+            <BTLBreakdown results={results} />
+          )}
+        </section>
+        <section>
+          {mode === "owner-occupied" ? (
+            <TimeSeriesChart results={results} />
+          ) : (
+            <BTLTimeSeriesChart results={results} />
+          )}
+        </section>
+        <section>
+          {mode === "owner-occupied" ? (
+            <SensitivityChart results={results} />
+          ) : (
+            <BTLSensitivityChart results={results} />
+          )}
+        </section>
+        <section>
+          <FormulaReference />
+        </section>
+      </main>
+
+      <footer className="border-t border-stone-200/60 py-6 mt-10 bg-[#faf6f0]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-zinc-400">
+          <p>{t("footer.disclaimer")}</p>
+          <p className="mt-1">{t("footer.data")}</p>
+        </div>
+      </footer>
+    </div>
+  );
+}
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <LanguageProvider>
+      <AppContent />
+    </LanguageProvider>
   );
 }
