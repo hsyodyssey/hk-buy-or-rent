@@ -103,7 +103,7 @@ export default function SummaryCards({ results }: Props) {
                 <span>{formatCompactHKD(avgAnnualCashOut)}</span>
               </div>
               <div className="flex justify-between text-zinc-400/80">
-                <span className="pl-2">{isZh ? "月供 ×12" : "Mortgage ×12"}</span>
+                <span className="pl-2">{isZh ? `月供 ${formatHKD(monthlyPayment, true)} ×12` : `Mortgage ${formatHKD(monthlyPayment, true)} ×12`}</span>
                 <span>{formatCompactHKD(avgAnnualMortgage)}</span>
               </div>
               <div className="flex justify-between text-zinc-400/80">
