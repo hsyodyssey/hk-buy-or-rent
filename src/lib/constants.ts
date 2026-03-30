@@ -44,9 +44,9 @@ export interface CalcParams {
 }
 
 export const DEFAULT_PARAMS: CalcParams = {
-  propertyPrice: 18_000_000,
-  ltvRatio: 0.7,
-  mortgageRate: 0.035,
+  propertyPrice: 15_000_000,
+  ltvRatio: 0.6,
+  mortgageRate: 0.0325,
   loanTermYears: 25,
   monthlyRent: 38_000,
   monthlyMgmtFee: 3_500,
