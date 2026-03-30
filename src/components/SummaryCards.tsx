@@ -45,8 +45,8 @@ export default function SummaryCards({ results }: Props) {
           <HelpTip
             text={
               isZh
-                ? "包含利息、持有费用、机会成本和交易费摊销，减去房产增值。不含本金偿还（本金转化为房产净值）"
-                : "Includes interest, holding costs, opportunity cost, amortized transaction fees, minus appreciation. Excludes principal repayment (converts to equity)"
+                ? "经济成本 ≠ 现金支出！TCO 包含利息、持有、机会成本和交易费摊销，减去增值。不含本金偿还（转化为净值）。下方「年度现金支出」展示实际掏钱金额"
+                : "Economic cost ≠ cash outflow! TCO = interest + holding + opportunity cost + txn − appreciation. Excludes principal (builds equity). See 'Annual Cash Outflow' below for actual spending"
             }
           />
         </p>
@@ -79,6 +79,56 @@ export default function SummaryCards({ results }: Props) {
             <span>−{formatCompactHKD(singleYear.appreciation)}</span>
           </div>
         </div>
+
+        {(() => {
+          const effectiveLoanYears = Math.min(params.loanTermYears, N);
+          const avgAnnualMortgage = monthlyPayment * 12 * effectiveLoanYears / N;
+          const avgAnnualPrincipal = avgAnnualMortgage - singleYear.interestCost;
+          const avgAnnualCashOut = avgAnnualMortgage + singleYear.holdingExpenses;
+          const trueCostCash = singleYear.interestCost + singleYear.holdingExpenses + singleYear.buyingCostAmortized + singleYear.sellingCostAmortized;
+          return (
+            <div className="mt-3 pt-3 border-t border-teal-200/40 space-y-1 text-xs font-mono">
+              <div className="flex justify-between font-semibold text-zinc-600">
+                <span>{isZh ? "年度现金支出" : "Annual Cash Outflow"}
+                  <HelpTip text={isZh
+                    ? "每年实际从口袋掏出的钱 = 月供×12 + 持有费用。注意：这不等于「成本」，因为月供里的本金会转化为房产净值"
+                    : "Actual cash paid per year = mortgage×12 + holding. Note: this ≠ cost, since principal in mortgage builds equity"
+                  } />
+                </span>
+                <span>{formatCompactHKD(avgAnnualCashOut)}</span>
+              </div>
+              <div className="flex justify-between text-zinc-400/80">
+                <span className="pl-2">{isZh ? "月供 ×12" : "Mortgage ×12"}</span>
+                <span>{formatCompactHKD(avgAnnualMortgage)}</span>
+              </div>
+              <div className="flex justify-between text-zinc-400/80">
+                <span className="pl-2">{isZh ? "持有费用" : "Holding"}</span>
+                <span>{formatCompactHKD(singleYear.holdingExpenses)}</span>
+              </div>
+
+              <div className="pt-1 space-y-0.5">
+                <div className="flex justify-between text-green-600">
+                  <span>{isZh ? "其中消费（花掉了）" : "Spent (true cost)"}
+                    <HelpTip text={isZh
+                      ? "利息 + 持有 + 交易费摊销：这些钱花出去就没了"
+                      : "Interest + holding + txn amortized: money that is gone"
+                    } />
+                  </span>
+                  <span>{formatCompactHKD(trueCostCash)}</span>
+                </div>
+                <div className="flex justify-between text-red-500">
+                  <span>{isZh ? "其中资产置换（存下了）" : "Equity built (forced savings)"}
+                    <HelpTip text={isZh
+                      ? "月供中偿还本金的部分：钱从银行存款变成了房产净值，并没有消失"
+                      : "Principal portion of mortgage: cash converts to home equity, not lost"
+                    } />
+                  </span>
+                  <span>{formatCompactHKD(avgAnnualPrincipal)}</span>
+                </div>
+              </div>
+            </div>
+          );
+        })()}
       </div>
 
       {/* Card 2: TCR */}
