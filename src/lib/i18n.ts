@@ -3,7 +3,7 @@ export type Locale = "en" | "zh" | "tc";
 const translations = {
   en: {
     // Header
-    "header.title": "HK Property Cost Analyzer",
+    "header.title": "HK Property Cost Calculator",
     "header.subtitle": "True Cost of Owning vs Renting — Data-Driven Decisions",
 
     // Mode
@@ -201,7 +201,7 @@ const translations = {
     "footer.data": "Data based on publicly available HK property market information.",
   },
   zh: {
-    "header.title": "香港房产成本分析器",
+    "header.title": "香港房产成本计算器",
     "header.subtitle": "自住买房 vs 租房 真实成本对比 — 用数据做决策",
 
     "mode.ownerOccupied": "自住对比",
@@ -386,7 +386,7 @@ const translations = {
     "footer.data": "数据基于公开的香港房地产市场信息。",
   },
   tc: {
-    "header.title": "香港房產成本分析器",
+    "header.title": "香港房產成本計算器",
     "header.subtitle": "自住買房 vs 租房 真實成本對比 — 用數據做決策",
 
     "mode.ownerOccupied": "自住對比",

@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "香港房产成本分析器 - 买房 vs 租房 真实成本对比";
+export const alt = "香港房产成本计算器 - 买房 vs 租房 真实成本对比";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -38,7 +38,7 @@ export default function OgImage() {
               textTransform: "uppercase",
             }}
           >
-            HK Property Analyzer
+            HK Property Calculator
           </div>
           <div
             style={{
@@ -49,7 +49,7 @@ export default function OgImage() {
               lineHeight: 1.2,
             }}
           >
-            香港房产成本分析器
+            香港房产成本计算器
           </div>
           <div
             style={{
