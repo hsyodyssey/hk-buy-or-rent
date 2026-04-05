@@ -93,5 +93,12 @@ export function usePropertyCalc() {
     };
   }, [params, mode]);
 
-  return { params, mode, setMode, updateParam, resetParams, results };
+  const applyEstimatorResults = useCallback(
+    (propertyPrice: number, monthlyRent: number) => {
+      setParams((prev) => ({ ...prev, propertyPrice, monthlyRent }));
+    },
+    []
+  );
+
+  return { params, mode, setMode, updateParam, resetParams, applyEstimatorResults, results };
 }
