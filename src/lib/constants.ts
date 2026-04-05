@@ -21,7 +21,7 @@ export const STAMP_DUTY_BRACKETS = [
   { min: 20_000_001, max: Infinity, rate: "4.25%" },
 ];
 
-export type AnalysisMode = "owner-occupied" | "buy-to-let";
+export type AnalysisMode = "owner-occupied" | "buy-to-let" | "price-estimator";
 
 export interface CalcParams {
   propertyPrice: number;

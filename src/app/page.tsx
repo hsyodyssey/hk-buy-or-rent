@@ -13,9 +13,28 @@ import BTLSummaryCards from "@/components/BTLSummaryCards";
 import BTLBreakdown from "@/components/BTLBreakdown";
 import BTLTimeSeriesChart from "@/components/BTLTimeSeriesChart";
 import BTLSensitivityChart from "@/components/BTLSensitivityChart";
+import PriceEstimator from "@/components/PriceEstimator";
+
+type ModeKey = AnalysisMode;
+type ModeLabelKey =
+  | "mode.ownerOccupied"
+  | "mode.buyToLet"
+  | "mode.priceEstimator";
+type ModeDescKey =
+  | "mode.ownerDesc"
+  | "mode.btlDesc"
+  | "mode.estimatorDesc";
 
 function AppContent() {
-  const { params, mode, setMode, updateParam, resetParams, results } = usePropertyCalc();
+  const {
+    params,
+    mode,
+    setMode,
+    updateParam,
+    resetParams,
+    applyEstimatorResults,
+    results,
+  } = usePropertyCalc();
   const { locale, setLocale, t } = useLanguage();
 
   const langOptions: { key: "zh" | "tc" | "en"; label: string }[] = [
@@ -24,9 +43,26 @@ function AppContent() {
     { key: "en", label: "EN" },
   ];
 
-  const modeOptions: { key: AnalysisMode; labelKey: "mode.ownerOccupied" | "mode.buyToLet"; descKey: "mode.ownerDesc" | "mode.btlDesc" }[] = [
-    { key: "owner-occupied", labelKey: "mode.ownerOccupied", descKey: "mode.ownerDesc" },
-    { key: "buy-to-let", labelKey: "mode.buyToLet", descKey: "mode.btlDesc" },
+  const modeOptions: {
+    key: ModeKey;
+    labelKey: ModeLabelKey;
+    descKey: ModeDescKey;
+  }[] = [
+    {
+      key: "owner-occupied",
+      labelKey: "mode.ownerOccupied",
+      descKey: "mode.ownerDesc",
+    },
+    {
+      key: "buy-to-let",
+      labelKey: "mode.buyToLet",
+      descKey: "mode.btlDesc",
+    },
+    {
+      key: "price-estimator",
+      labelKey: "mode.priceEstimator",
+      descKey: "mode.estimatorDesc",
+    },
   ];
 
   return (
@@ -49,6 +85,7 @@ function AppContent() {
                   <span className="font-bold text-stone-900">{opt.label}</span>
                 ) : (
                   <button
+                    type="button"
                     onClick={() => setLocale(opt.key)}
                     className="text-stone-400 hover:text-stone-700 transition-colors cursor-pointer"
                   >
@@ -67,6 +104,7 @@ function AppContent() {
           {modeOptions.map((opt) => (
             <button
               key={opt.key}
+              type="button"
               onClick={() => setMode(opt.key)}
               className={`flex-1 sm:flex-none px-5 py-3 rounded-xl border-2 transition-all text-left ${
                 mode === opt.key
@@ -74,14 +112,18 @@ function AppContent() {
                   : "border-stone-200 bg-[#faf8f5] hover:border-stone-300"
               }`}
             >
-              <span className={`text-sm font-semibold ${
-                mode === opt.key ? "text-teal-700" : "text-zinc-500"
-              }`}>
+              <span
+                className={`text-sm font-semibold ${
+                  mode === opt.key ? "text-teal-700" : "text-zinc-500"
+                }`}
+              >
                 {t(opt.labelKey)}
               </span>
-              <p className={`text-xs mt-0.5 ${
-                mode === opt.key ? "text-teal-500" : "text-zinc-400"
-              }`}>
+              <p
+                className={`text-xs mt-0.5 ${
+                  mode === opt.key ? "text-teal-500" : "text-zinc-400"
+                }`}
+              >
                 {t(opt.descKey)}
               </p>
             </button>
@@ -90,46 +132,77 @@ function AppContent() {
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
-        <section>
-          {mode === "owner-occupied" ? (
-            <SummaryCards results={results} />
-          ) : (
-            <BTLSummaryCards results={results} />
-          )}
-        </section>
-        <section>
-          <Calculator
-            params={params}
-            results={results}
-            mode={mode}
-            onUpdate={updateParam}
-            onReset={resetParams}
-          />
-        </section>
-        <section>
-          {mode === "owner-occupied" ? (
-            <CostBreakdown results={results} />
-          ) : (
-            <BTLBreakdown results={results} />
-          )}
-        </section>
-        <section>
-          {mode === "owner-occupied" ? (
-            <TimeSeriesChart results={results} />
-          ) : (
-            <BTLTimeSeriesChart results={results} />
-          )}
-        </section>
-        <section>
-          {mode === "owner-occupied" ? (
-            <SensitivityChart results={results} />
-          ) : (
-            <BTLSensitivityChart results={results} />
-          )}
-        </section>
-        <section>
-          <FormulaReference />
-        </section>
+        {mode === "price-estimator" ? (
+          <>
+            <section>
+              <PriceEstimator onApply={applyEstimatorResults} />
+            </section>
+            <section>
+              <Calculator
+                params={params}
+                results={results}
+                mode={mode === "price-estimator" ? "owner-occupied" : mode}
+                onUpdate={updateParam}
+                onReset={resetParams}
+              />
+            </section>
+            <section>
+              <CostBreakdown results={results} />
+            </section>
+            <section>
+              <TimeSeriesChart results={results} />
+            </section>
+            <section>
+              <SensitivityChart results={results} />
+            </section>
+            <section>
+              <FormulaReference />
+            </section>
+          </>
+        ) : (
+          <>
+            <section>
+              {mode === "owner-occupied" ? (
+                <SummaryCards results={results} />
+              ) : (
+                <BTLSummaryCards results={results} />
+              )}
+            </section>
+            <section>
+              <Calculator
+                params={params}
+                results={results}
+                mode={mode}
+                onUpdate={updateParam}
+                onReset={resetParams}
+              />
+            </section>
+            <section>
+              {mode === "owner-occupied" ? (
+                <CostBreakdown results={results} />
+              ) : (
+                <BTLBreakdown results={results} />
+              )}
+            </section>
+            <section>
+              {mode === "owner-occupied" ? (
+                <TimeSeriesChart results={results} />
+              ) : (
+                <BTLTimeSeriesChart results={results} />
+              )}
+            </section>
+            <section>
+              {mode === "owner-occupied" ? (
+                <SensitivityChart results={results} />
+              ) : (
+                <BTLSensitivityChart results={results} />
+              )}
+            </section>
+            <section>
+              <FormulaReference />
+            </section>
+          </>
+        )}
       </main>
 
       <footer className="border-t border-stone-200/60 py-6 mt-10 bg-[#faf6f0]">
